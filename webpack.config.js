@@ -9,7 +9,8 @@ module.exports = env => {
     mode: 'production',
 
     entry: {
-      background: './src/background/background.js'
+      background: './src/background/background.js',
+      popup: './src/popup/popup.js'
     },
 
     output: {
@@ -19,6 +20,13 @@ module.exports = env => {
 
     plugins: [
       new webpack.DefinePlugin(envKeys)
-    ]
+    ],
+
+    module: {
+      rules: [
+        { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+      ]
+    }
+
   };
 };
