@@ -1,20 +1,20 @@
 import { h, render } from 'preact';
 import { useState } from 'preact/hooks';
-
 import io from 'socket.io-client';
-const socket = io(process.env.HOST)
-
 
 const getFormValues = event =>
-  Array.from(event.target.elements).filter(el => el.name).reduce((acc, cur) => ({...acc, [cur.name]: cur.value}),{});
+  Array.from(event.target.elements)
+    .filter(el => el.name)
+    .reduce((acc, cur) => ({...acc, [cur.name]: cur.value}), {});
 
 const SignUp = () => { 
-
   const handleSubmit = event => {
     event.preventDefault();
-    socket.emit('signup', JSON.stringify( getFormValues(event) ))
+    const socket = io(process.env.HOST);
+    socket
+      .emit('signup', JSON.stringify( getFormValues(event) ))
+      .on('token', token => browser.storage.local.set({token}));
   }
-
   return (
     <form onSubmit={handleSubmit} >
       <label for="email">Email:</label><br />
@@ -27,12 +27,13 @@ const SignUp = () => {
 };
 
 const Login = () => { 
-
   const handleSubmit = event => {
     event.preventDefault();
-    socket.emit('login', JSON.stringify( getFormValues(event) ))
+    const socket = io(process.env.HOST);
+    socket
+      .on('connect', () => socket.emit('login', JSON.stringify( getFormValues(event) )))
+      .on('token', token => browser.storage.local.set({token}));
   }
-
 
   return (
     <form onSubmit={handleSubmit}>
@@ -46,23 +47,18 @@ const Login = () => {
 };
 
 const AddWord = () => {
-  
   const handleSubmit = event => {
     event.preventDefault();
     socket.emit('add word', JSON.stringify( getFormValues(event) ))
   }
-
   return (
     <form onSubmit={handleSubmit}>
       <label for="word">Word:</label><br />
       <input required type="text" id="word" name="word" /><br />
-
       <label for="meaning">Meaning:</label><br />
       <input required type="meaning" id="meaning" name="meaning" /><br /><br />
-
       <label for="example">Example:</label><br />
       <input required type="example" id="example" name="example" /><br /><br />
-
       <button>Add!</button>
     </form>
   )
@@ -70,19 +66,6 @@ const AddWord = () => {
 
 const App = () => {
   const [state, setState] = useState('AddWord');
-  const [token, setToken] = useState(localStorage.token || null);
-
-  socket.on('token', token => {
-    setToken(token);
-    localStorage.token = token;
-  });
-
-  socket.on('connect', () => {
-    socket
-      .emit('authenticate', { token }) //send the jwt
-      .on('authenticated', () => console.log('Authenticated!'))
-      .on('unauthorized', msg => console.log(`Unauthorized: ${JSON.stringify(msg.data)}`))
-  });
 
   return (
     <div>
