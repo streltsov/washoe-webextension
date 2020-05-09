@@ -7,7 +7,8 @@ socket.on('connect', () => {
   socket
     .on('authenticated', () => console.log('Authenticated!'))
     .on('unauthorized', msg => console.count(`Unauthorized: ${JSON.stringify(msg.data)}`))
-    .on('disconnect', msg => console.log('Disconnected, ', new Date()));
+    .on('disconnect', msg => console.log('Disconnected, ', new Date()))
+    .on('word', console.log);
 
   browser.storage.local.get('token').then(res => {
     const { token } = res;
@@ -23,7 +24,8 @@ browser.storage.onChanged.addListener( changedProps => {
     socket
       .on('authenticated', () => console.log('Authenticated!'))
       .on('unauthorized', msg => console.count(`Unauthorized: ${JSON.stringify(msg.data)}`))
-      .on('disconnect', msg => console.log('Disconnected, ', new Date()));
+      .on('disconnect', msg => console.log('Disconnected, ', new Date()))
+      .on('word', console.log);
 
     const { token: { newValue: token } } = changedProps;
     if(token) socket.emit('authenticate', { token });
