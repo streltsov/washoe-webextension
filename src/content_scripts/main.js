@@ -1,4 +1,3 @@
-
 const styles = `
 #snackbar {
   min-width: 250px;
@@ -10,9 +9,9 @@ const styles = `
   padding: 16px;
   position: fixed;
   z-index: 1;
-  left: 50%;
-  bottom: 30px;
-  font-size: 17px;
+  right: 16px;
+  bottom: 16px;
+  font-size: 16px;
 }
 
 .opening {
@@ -25,12 +24,12 @@ const styles = `
 
 @-webkit-keyframes fadein {
   from {bottom: 0; opacity: 0;} 
-  to {bottom: 30px; opacity: 1;}
+  to {bottom: 16px; opacity: 1;}
 }
 
 @keyframes fadein {
   from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
+  to {bottom: 16px; opacity: 1;}
 }
 
 @-webkit-keyframes fadeout {
