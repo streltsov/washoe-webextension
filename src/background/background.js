@@ -1,34 +1,19 @@
 const io = require('socket.io-client');
 
 const socket = io(process.env.HOST);
+
 socket.on('connect', () => {
   console.log('Connected, ' + new Date());
-
-  socket
-    .on('authenticated', () => console.log('Authenticated!'))
-    .on('unauthorized', msg => console.count(`Unauthorized: ${JSON.stringify(msg.data)}`))
-    .on('disconnect', msg => console.log('Disconnected, ', new Date()))
-    .on('word', console.log);
-
   browser.storage.local.get('token').then(res => {
-    const { token } = res;
-    if(token) socket.emit('authenticate', { token })
+    if(res.hasOwnProperty('token')) socket.emit('authenticate', res)
   });
 });
 
+socket.on('word', console.log)
+  .on('authenticated', () => console.log('Authenticated!'))
+  .on('unauthorized', msg => console.count(`Unauthorized: ${JSON.stringify(msg.data)}`))
+  .on('disconnect', msg => console.log('Disconnected, ', new Date()))
+
 browser.storage.onChanged.addListener( changedProps => {
-  const socket = io(process.env.HOST);
-  socket.on('connect', () => {
-    console.log('Connected on token change, ' + new Date());
-
-    socket
-      .on('authenticated', () => console.log('Authenticated!'))
-      .on('unauthorized', msg => console.count(`Unauthorized: ${JSON.stringify(msg.data)}`))
-      .on('disconnect', msg => console.log('Disconnected, ', new Date()))
-      .on('word', console.log);
-
-    const { token: { newValue: token } } = changedProps;
-    if(token) socket.emit('authenticate', { token });
-
-  });
+  if(changedProps.hasOwnProperty('token')) socket.close().connect();
 });
