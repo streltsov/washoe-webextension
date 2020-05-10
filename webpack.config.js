@@ -10,6 +10,7 @@ module.exports = env => {
 
     entry: {
       background: './src/background/background.js',
+      content_scripts: './src/content_scripts/main.js',
       popup: './src/popup/popup.js'
     },
 
@@ -24,7 +25,8 @@ module.exports = env => {
 
     module: {
       rules: [
-        { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+        { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
+        { test: /\.css$/i, use: ['style-loader', 'css-loader'] }
       ]
     }
 
