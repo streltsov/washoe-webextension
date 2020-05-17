@@ -26,8 +26,8 @@ browser.storage.onChanged.addListener( changedProps => {
 
 // Add Word
 browser.runtime.onMessage.addListener(res => {
-  console.log('hell: ', { ...res.word, timestamp: new Date(Date.now() + 12e4) });
-  socket.emit('add word', JSON.stringify({ ...res.word, timestamp: new Date(Date.now() + 12e4) }));
+  console.log('Word to add: ', { ...res.word, notifyIn: 12e4 });
+  socket.emit('add word', JSON.stringify({ ...res.word, notifyIn: 12e4 }));
 });
 
 const sendMsgToTab = tabId => msg => browser.tabs.sendMessage( tabId, msg);
