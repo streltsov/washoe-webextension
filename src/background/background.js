@@ -9,13 +9,25 @@ socket.on('connect', () => {
   });
 });
 
-socket.on('word', word => getActiveTab().then(res => res.length && sendMsgToTab(res[0].id)(word)))
+socket.on('word', word => {
+  const onRespond = res => {
+    res && socket.emit('notification-response', JSON.stringify(res));
+  }
+  getActiveTab()
+    .then(res => res.length && sendMsgToTab(res[0].id)(word).then(onRespond));
+})
   .on('authenticated', () => console.log('Authenticated!'))
   .on('unauthorized', msg => console.count(`Unauthorized: ${JSON.stringify(msg.data)}`))
   .on('disconnect', msg => console.log('Disconnected, ', new Date()))
 
 browser.storage.onChanged.addListener( changedProps => {
   if(changedProps.hasOwnProperty('token')) socket.close().connect();
+});
+
+// Add Word
+browser.runtime.onMessage.addListener(res => {
+  console.log('hell: ', { ...res.word, timestamp: new Date(Date.now() + 12e4) });
+  socket.emit('add word', JSON.stringify({ ...res.word, timestamp: new Date(Date.now() + 12e4) }));
 });
 
 const sendMsgToTab = tabId => msg => browser.tabs.sendMessage( tabId, msg);

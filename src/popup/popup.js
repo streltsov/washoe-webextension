@@ -49,8 +49,9 @@ const Login = () => {
 const AddWord = () => {
   const handleSubmit = event => {
     event.preventDefault();
-    socket.emit('add word', JSON.stringify( getFormValues(event) ))
+    browser.runtime.sendMessage({ word: getFormValues(event) });
   }
+
   return (
     <form onSubmit={handleSubmit}>
       <label for="word">Word:</label><br />
