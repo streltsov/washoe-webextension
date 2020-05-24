@@ -33,6 +33,7 @@ browser.runtime.onMessage.addListener(request => {
       button.addEventListener('click', () => {
         notification.className = 'closing';
         setTimeout(() => notification.remove(), 2000);
+        console.table('Word:', word)
         resolve({ type: 'reset', ...word, notifyIn: INTERVALS[0] });
       });
 
