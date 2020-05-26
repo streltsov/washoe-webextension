@@ -12,7 +12,8 @@ module.exports = env => {
       manifest: './src/manifest.json',
       background: './src/background/background.js',
       content_scripts: './src/content_scripts/main.js',
-      popup: './src/popup/popup.js'
+      popup_script: './src/popup/popup.js',
+      popup: './src/popup/popup.html'
     },
 
     output: {
@@ -27,7 +28,8 @@ module.exports = env => {
     module: {
       rules: [
         { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
-        { test: /\.css$/i, use: ['style-loader', 'css-loader'] }
+        { test: /\.css$/i, use: ['style-loader', 'css-loader'] },
+        { test: /\.html$/i, loader: 'html-loader' }
       ]
     }
 
