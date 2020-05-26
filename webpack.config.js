@@ -9,6 +9,7 @@ module.exports = env => {
     mode: 'production',
 
     entry: {
+      manifest: './src/manifest.json',
       background: './src/background/background.js',
       content_scripts: './src/content_scripts/main.js',
       popup: './src/popup/popup.js'
