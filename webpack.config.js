@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = env => {
 
@@ -9,11 +10,9 @@ module.exports = env => {
     mode: 'production',
 
     entry: {
-      manifest: './src/manifest.json',
       background: './src/background/background.js',
       content_scripts: './src/content_scripts/main.js',
-      popup_script: './src/popup/popup.js',
-      popup: './src/popup/popup.html'
+      popup: './src/popup/popup.js',
     },
 
     output: {
@@ -22,7 +21,13 @@ module.exports = env => {
     },
 
     plugins: [
-      new webpack.DefinePlugin(envKeys)
+      new webpack.DefinePlugin(envKeys),
+      new CopyPlugin({
+      patterns: [
+        'src/popup/popup.html',
+        'src/manifest.json'
+      ]
+    }),
     ],
 
     module: {
