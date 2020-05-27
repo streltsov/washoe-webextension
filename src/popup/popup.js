@@ -1,5 +1,5 @@
-import { h, render } from 'preact';
-import { useState } from 'preact/hooks';
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import io from 'socket.io-client';
 
 const getFormValues = event =>
@@ -79,5 +79,4 @@ const App = () => {
 
 }
 
-
-render(<App />, document.body.querySelector('#root'));
+ReactDOM.render(<App />, document.body.querySelector('#root'));
