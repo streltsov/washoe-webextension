@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { Provider, useSelector } from 'react-redux';
+import { Store } from 'webext-redux';
 import io from 'socket.io-client';
 
 const getFormValues = event =>
@@ -68,6 +70,9 @@ const AddWord = () => {
 const App = () => {
   const [state, setState] = useState('AddWord');
 
+  const stat = useSelector(x => x);
+  console.log('State: ', stat);
+
   return (
     <div>
       <button onClick={() => setState('signup')}>Sign Up</button>
@@ -79,4 +84,16 @@ const App = () => {
 
 }
 
-ReactDOM.render(<App />, document.body.querySelector('#root'));
+//ReactDOM.render(<App />, document.body.querySelector('#root'));
+
+
+const store = new Store();
+
+store.ready().then(() => {
+  console.log('Store is ready!');
+  ReactDOM.render(
+    <Provider store={store}>
+      <App/>
+    </Provider>
+    , document.getElementById('root'));
+});

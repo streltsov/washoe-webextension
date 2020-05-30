@@ -1,5 +1,12 @@
 const io = require('socket.io-client');
 
+import { createStore } from 'redux';
+import { wrapStore } from 'webext-redux';
+
+const store = createStore(x => x);
+wrapStore(store);
+
+
 const socket = io(process.env.HOST);
 
 socket.on('connect', () => {
