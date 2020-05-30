@@ -68,17 +68,16 @@ const AddWord = () => {
 }
 
 const App = () => {
-  const [state, setState] = useState('AddWord');
+  const { isLoggedIn } = useSelector(x => x);
+  const [state, setState] = useState(isLoggedIn ? 'AddWord' : 'login');
 
-  const stat = useSelector(x => x);
-  console.log('State: ', stat);
 
   return (
     <div>
       <button onClick={() => setState('signup')}>Sign Up</button>
       <button onClick={() => setState('login')}>Login</button>
       <button onClick={() => setState('add word')}>Add Word</button>
-      {state == 'login' ? <Login /> : state == 'signup' ? <SignUp /> : <AddWord />}
+      { isLoggedIn ? <AddWord /> : <Login /> }
     </div>
   );
 
@@ -90,7 +89,6 @@ const App = () => {
 const store = new Store();
 
 store.ready().then(() => {
-  console.log('Store is ready!');
   ReactDOM.render(
     <Provider store={store}>
       <App/>

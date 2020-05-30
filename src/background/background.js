@@ -1,11 +1,18 @@
 const io = require('socket.io-client');
 
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { wrapStore } from 'webext-redux';
 
-const store = createStore(x => x);
+const isLoggedIn = (state = false, action) =>
+  action.type == 'IS_LOGGED_IN' ? action.payload : state;
+
+const rootReducer = combineReducers({isLoggedIn});
+
+const store = createStore(rootReducer);
+
 wrapStore(store);
 
+setTimeout(() => store.dispatch({type: 'IS_LOGGED_IN', payload: true}), 7000);
 
 const socket = io(process.env.HOST);
 
