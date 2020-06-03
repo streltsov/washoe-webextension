@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, useSelector } from 'react-redux';
 import { Store } from 'webext-redux';
+import { useForm } from "react-hook-form";
 import io from 'socket.io-client';
 
 const getFormValues = event =>
@@ -10,15 +11,20 @@ const getFormValues = event =>
     .reduce((acc, cur) => ({...acc, [cur.name]: cur.value}), {});
 
 const SignUp = () => { 
-  const handleSubmit = event => {
-    event.preventDefault();
-    const socket = io(process.env.HOST);
-    socket
-      .emit('signup', JSON.stringify( getFormValues(event) ))
-      .on('token', token => browser.storage.local.set({token}));
-  }
+
+  const { register, handleSubmit, watch, errors } = useForm();
+  const onSubmit = data => console.log(data);
+
+//  const handleSubmit = event => {
+//    event.preventDefault();
+//    const socket = io(process.env.HOST);
+//    socket
+//      .emit('signup', JSON.stringify( getFormValues(event) ))
+//      .on('token', token => browser.storage.local.set({token}));
+//  }
+
   return (
-    <form onSubmit={handleSubmit} >
+    <form onSubmit={handleSubmit(onSubmit)} >
       <label for="email">Email:</label><br />
       <input type="email" id="email" name="email" /><br />
       <label for="password">Password:</label><br />
@@ -29,20 +35,21 @@ const SignUp = () => {
 };
 
 const Login = () => { 
-  const handleSubmit = event => {
-    event.preventDefault();
-    const socket = io(process.env.HOST);
-    socket
-      .on('connect', () => socket.emit('login', JSON.stringify( getFormValues(event) )))
-      .on('token', token => browser.storage.local.set({token}));
-  }
+  const { register, handleSubmit, watch, errors } = useForm();
+
+  const onSubmit = data => {
+  const socket = io(process.env.HOST);
+  socket
+    .on('connect', () => socket.emit('login', JSON.stringify( data )))
+    .on('token', token => browser.storage.local.set({ token }));
+}
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <label for="email">Email:</label><br />
-      <input required type="email" id="email" name="email" /><br />
+      <input required type="email" id="email" name="email" ref={register} /><br />
       <label for="password">Password:</label><br />
-      <input required type="password" id="password" name="password" /><br /><br />
+      <input required type="password" id="password" name="password" ref={register} /><br /><br />
       <button>Login!</button>
     </form>
   )
@@ -69,8 +76,7 @@ const AddWord = () => {
 
 const App = () => {
   const { isLoggedIn } = useSelector(x => x);
-  const [state, setState] = useState(isLoggedIn ? 'AddWord' : 'login');
-
+  console.log({ isLoggedIn });
 
   return (
     <div>
@@ -82,9 +88,6 @@ const App = () => {
   );
 
 }
-
-//ReactDOM.render(<App />, document.body.querySelector('#root'));
-
 
 const store = new Store();
 

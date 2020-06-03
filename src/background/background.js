@@ -12,8 +12,6 @@ const store = createStore(rootReducer);
 
 wrapStore(store);
 
-setTimeout(() => store.dispatch({type: 'IS_LOGGED_IN', payload: true}), 7000);
-
 const socket = io(process.env.HOST);
 
 socket.on('connect', () => {
@@ -30,11 +28,21 @@ socket.on('word', word => {
   getActiveTab()
     .then(res => res.length && sendMsgToTab(res[0].id)(word).then(onRespond));
 })
-  .on('authenticated', () => console.log('Authenticated!'))
-  .on('unauthorized', msg => console.count(`Unauthorized: ${JSON.stringify(msg.data)}`))
-  .on('disconnect', msg => console.log('Disconnected, ', new Date()))
+  .on('authenticated', () => {
+    console.log('Authenticated!');
+    store.dispatch({type: 'IS_LOGGED_IN', payload: true});
+  })
+  .on('unauthorized', msg => {
+    console.count(`Unauthorized: ${JSON.stringify(msg.data)}`);
+    store.dispatch({type: 'IS_LOGGED_IN', payload: false});
+  })
+  .on('disconnect', msg => {
+    console.log('Disconnected, ', new Date());
+    store.dispatch({type: 'IS_LOGGED_IN', payload: false});
+  })
 
 browser.storage.onChanged.addListener( changedProps => {
+  console.log('Token changed');
   if(changedProps.hasOwnProperty('token')) socket.close().connect();
 });
 
