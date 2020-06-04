@@ -27,6 +27,7 @@
     "keyword-spacing": ["error", { "before": true, "after": true }],
     "no-trailing-spaces": "error",
     "no-unneeded-ternary": "error",
-    "quotes": ["error", "double"]
+    "quotes": ["error", "double"],
+    "semi": "error"
   }
 }
