@@ -7,30 +7,12 @@ import io from "socket.io-client";
 
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
+import AddWord from "./AddWord";
 
 const getFormValues = event =>
   Array.from(event.target.elements)
     .filter(el => el.name)
     .reduce((acc, cur) => ({ ...acc, [cur.name]: cur.value }), {});
-
-const AddWord = () => {
-  const handleSubmit = event => {
-    event.preventDefault();
-    browser.runtime.sendMessage({ word: getFormValues(event) });
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="word">Word:</label><br />
-      <input required type="text" id="word" name="word" /><br />
-      <label htmlFor="meaning">Meaning:</label><br />
-      <input required type="meaning" id="meaning" name="meaning" /><br /><br />
-      <label htmlFor="example">Example:</label><br />
-      <input required type="example" id="example" name="example" /><br /><br />
-      <button>Add!</button>
-    </form>
-  );
-};
 
 const App = () => {
   const { isLoggedIn } = useSelector(x => x);
