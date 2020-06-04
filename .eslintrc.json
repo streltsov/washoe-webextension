@@ -30,6 +30,7 @@
     "quotes": ["error", "double"],
     "semi": "error",
     "space-before-blocks": "error",
-    "space-infix-ops": "error"
+    "space-infix-ops": "error",
+    "arrow-body-style": ["error", "as-needed"]
   }
 }
