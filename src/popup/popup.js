@@ -7,7 +7,7 @@ import LogIn from "./LogIn";
 import SignUp from "./SignUp";
 import AddWord from "./AddWord";
 
-const App = () => {
+function Popup () {
   const { isLoggedIn } = useSelector(x => x);
 
   return (
@@ -26,7 +26,7 @@ const store = new Store();
 store.ready().then(() => {
   ReactDOM.render(
     <Provider store={store}>
-      <App/>
+      <Popup />
     </Provider>
     , document.getElementById("root"));
 });

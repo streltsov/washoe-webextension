@@ -2,12 +2,12 @@ import React from "react";
 import io from "socket.io-client";
 import { useForm } from "react-hook-form";
 
-const Login = () => {
+function Login () {
   const { register, handleSubmit, watch, errors } = useForm();
 
   const onSubmit = data => {
     const socket = io(process.env.HOST);
-    socket.on("connect", () => socket.emit("login", JSON.stringify( data )));
+    socket.on("connect", () => socket.emit("login", JSON.stringify(data)));
     socket.on("token", token => browser.storage.local.set({ token }));
   };
 
