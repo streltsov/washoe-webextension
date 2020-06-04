@@ -29,6 +29,7 @@
     "no-unneeded-ternary": "error",
     "quotes": ["error", "double"],
     "semi": "error",
-    "space-before-blocks": "error"
+    "space-before-blocks": "error",
+    "space-infix-ops": "error"
   }
 }
