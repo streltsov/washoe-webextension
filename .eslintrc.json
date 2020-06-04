@@ -31,6 +31,7 @@
     "semi": "error",
     "space-before-blocks": "error",
     "space-infix-ops": "error",
-    "arrow-body-style": ["error", "as-needed"]
+    "arrow-body-style": ["error", "as-needed"],
+    "arrow-parens": ["error", "as-needed"]
   }
 }
