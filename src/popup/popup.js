@@ -6,35 +6,12 @@ import { useForm } from "react-hook-form";
 import io from "socket.io-client";
 
 import LogIn from "./LogIn";
+import SignUp from "./SignUp";
 
 const getFormValues = event =>
   Array.from(event.target.elements)
     .filter(el => el.name)
     .reduce((acc, cur) => ({ ...acc, [cur.name]: cur.value }), {});
-
-const SignUp = () => {
-
-  const { register, handleSubmit, watch, errors } = useForm();
-  const onSubmit = data => console.log(data);
-
-  //  const handleSubmit = event => {
-  //    event.preventDefault();
-  //    const socket = io(process.env.HOST);
-  //    socket
-  //      .emit('signup', JSON.stringify( getFormValues(event) ))
-  //      .on('token', token => browser.storage.local.set({token}));
-  //  }
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} >
-      <label htmlFor="email">Email:</label><br />
-      <input type="email" id="email" name="email" /><br />
-      <label htmlFor="password">Password:</label><br />
-      <input type="password" id="password" name="password" /><br /><br />
-      <button>Sign Up!</button>
-    </form>
-  );
-};
 
 const AddWord = () => {
   const handleSubmit = event => {
