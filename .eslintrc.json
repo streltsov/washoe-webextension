@@ -20,6 +20,7 @@
     "object-curly-spacing": ["error", "always"],
     "array-bracket-spacing": ["error", "always"],
     "space-before-function-paren": ["error", "always"],
-    "no-multi-spaces": ["error", { "ignoreEOLComments": false }]
+    "no-multi-spaces": ["error", { "ignoreEOLComments": false }],
+    "comma-spacing": ["error", { "before": false, "after": true }]
   }
 }
