@@ -30,12 +30,12 @@ function Popup () {
     "add-word": <AddWord />
   };
 
-  return (
+  return isLoggedIn ? (
     <div>
       { Boolean(view != "menu") && <MenuItem onClick={() => setView("menu")}><ArrowBackIosIcon />Back</MenuItem> }
       { switcher[view] }
     </div>
-  );
+  ) : <LogIn />;
 };
 
 const store = new Store();
