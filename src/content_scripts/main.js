@@ -1,44 +1,67 @@
-import { INTERVALS } from '../data';
-import './Notification.css';
+import { INTERVALS } from "../data";
+//import "./Notification.css";
+
+import React from "react";
+import ReactDOM from "react-dom";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import RotateLeftIcon from "@material-ui/icons/RotateLeft";
+
+const createNotificationsContainer = () => {
+  const container = document.createElement("div");
+  container.id = "washoe-notification";
+  document.body.append(container);
+};
+
+const removeNotificationContainer = () =>
+  document.querySelector("#washoe-notification").remove();
+
+const EnterWord = ({ word, onStageUp, onReset }) => {
+
+  const handleInputChange = event => {
+    if (word.word.toLowerCase() == event.target.value.toLowerCase()) {
+      onStageUp();
+    }
+  };
+
+  return (
+    <React.Fragment>
+      <Typography>{word.meaning}</Typography>
+      <TextField autoFocus onChange={handleInputChange} fullWidth />
+      <Button><RotateLeftIcon onClick={onReset} /></Button>
+    </React.Fragment>
+  );
+};
+
+function Notification ({ children }) {
+  return <Snackbar open={true} message={children} onClose={() => console.log("closing")} />;
+};
 
 browser.runtime.onMessage.addListener(request => {
 
-  if(!document.body.querySelector('#washoe-notification')) {
+  if (!document.body.querySelector("#washoe-notification")) {
     return new Promise(resolve => {
-
       const word = JSON.parse(request);
 
-      /* Notification */
-      const notification = document.createElement('div');
-      notification.id = 'washoe-notification';
-      notification.className = 'opening'
-      notification.textContent = word.meaning;
+      const stageUp = () => {
+        resolve({ type: "stageup", ...word, notifyIn: INTERVALS[ word.stage + 1 ] });
+        removeNotificationContainer();
+      };
 
-      /* Input */
-      const input = document.createElement('input');
-      input.addEventListener('input', event => {
-        if(word.word == event.target.value) {
-          notification.className = 'closing';
-          setTimeout(() => notification.remove(), 2000);
-          console.log({ type: 'stageup', ...word, notifyIn: INTERVALS[word.stage + 1] });
-          resolve({ type: 'stageup', ...word, notifyIn: INTERVALS[word.stage + 1] });
-        }
-      });
-      notification.appendChild(input);
-      setTimeout(() => input.focus());
+      const reset = () => {
+        resolve({ type: "reset", ...word, notifyIn: INTERVALS[0] });
+        removeNotificationContainer();
+      };
 
-      /* Button */
-      const button = document.createElement('button');
-      button.textContent = '❌';
-      button.addEventListener('click', () => {
-        notification.className = 'closing';
-        setTimeout(() => notification.remove(), 2000);
-        console.table('Word:', word)
-        resolve({ type: 'reset', ...word, notifyIn: INTERVALS[0] });
-      });
-
-      notification.appendChild(button);
-      document.body.appendChild(notification);
+      createNotificationsContainer();
+      ReactDOM.render(
+        <Notification>
+          <EnterWord onStageUp={stageUp} onReset={reset} word={word} />
+        </Notification>,
+        document.body.querySelector("#washoe-notification")
+      );
     });
   }
 });
