@@ -8,6 +8,9 @@ import Snackbar from "@material-ui/core/Snackbar";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import RotateLeftIcon from "@material-ui/icons/RotateLeft";
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
 
 const createNotificationsContainer = () => {
   const container = document.createElement("div");
@@ -27,16 +30,16 @@ const EnterWord = ({ word, onStageUp, onReset }) => {
   };
 
   return (
-    <React.Fragment>
+    <Box display="flex" flexDirection="row">
       <Typography>{word.meaning}</Typography>
       <TextField autoFocus onChange={handleInputChange} fullWidth />
       <Button><RotateLeftIcon onClick={onReset} /></Button>
-    </React.Fragment>
+    </Box>
   );
 };
 
 function Notification ({ children }) {
-  return <Snackbar open={true} message={children} onClose={() => console.log("closing")} />;
+  return <SnackbarContent open={true} message={children} onClose={() => console.log("closing")} />;
 };
 
 browser.runtime.onMessage.addListener(request => {
