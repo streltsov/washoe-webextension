@@ -1,5 +1,4 @@
 import { INTERVALS } from "../data";
-//import "./Notification.css";
 
 import React from "react";
 import ReactDOM from "react-dom";
