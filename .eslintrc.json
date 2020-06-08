@@ -34,6 +34,7 @@
     "arrow-body-style": ["error", "as-needed"],
     "arrow-parens": ["error", "as-needed"],
     "arrow-spacing": "error",
-    "indent": ["error", 2]
+    "indent": ["error", 2],
+    "no-duplicate-imports": "error"
   }
 }
