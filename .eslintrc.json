@@ -35,6 +35,7 @@
     "arrow-parens": ["error", "as-needed"],
     "arrow-spacing": "error",
     "indent": ["error", 2],
-    "no-duplicate-imports": "error"
+    "no-duplicate-imports": "error",
+    "prefer-destructuring": ["error", {"object": true, "array": false}]
   }
 }
