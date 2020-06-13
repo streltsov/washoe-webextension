@@ -1,6 +1,6 @@
 import Notification from "./Notification";
 import { isElementOnPage } from "../utils/dom";
-import { NOTIFICATION_ID, INTERVALS } from "../constants";
+import { NOTIFICATION_CLASS_NAME, INTERVALS } from "../constants";
 
 function EnterWord ({ word, resolve }) {
   const container = document.createElement("div");
@@ -22,10 +22,10 @@ const createShadowDom = shadowHostId => children => {
 };
 
 const removeNotificationContainer = () =>
-  document.querySelector(NOTIFICATION_ID).remove();
+  document.querySelector(NOTIFICATION_CLASS_NAME).remove();
 
 browser.runtime.onMessage.addListener(request => {
-  if (!isElementOnPage(NOTIFICATION_ID)) {
+  if (!isElementOnPage(NOTIFICATION_CLASS_NAME)) {
     return new Promise(resolve => {
 
       const word = JSON.parse(request);
