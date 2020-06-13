@@ -1,0 +1,51 @@
+.washoe-notification {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+
+  background-color: #2a2a2e;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.enter-word {
+  display: flex;
+  align-items: center;
+}
+
+.washoe-notification .meaning {
+  font-family: sans-serif;
+  color: #fff;
+}
+
+.enter-word input {
+  background-color: #38383d;
+  border: 1px solid #5f5f63;
+  color: #fff;
+  padding: 8px;
+  border-radius: 3px;
+  margin: 0 8px;
+}
+
+.enter-word button {
+  all: unset;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  border-radius: 2px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.washoe-notification input:focus,
+.washoe-notification button:focus {
+  border: 1px solid #0a84ff;
+  box-shadow: 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
+}
+
+.washoe-notification button {
+  background: none;
+  border: none;
+}
+
