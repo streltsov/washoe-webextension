@@ -2,6 +2,11 @@ function EnterWord () {
   const container = document.createElement("div");
   container.className = "enter-word";
 
+  // Styles
+  const style = document.createElement("style");
+  style.textContent = styles();
+  container.appendChild(style);
+
   // Meaning
   const span = document.createElement("span");
   span.className = "meaning";
@@ -18,5 +23,46 @@ function EnterWord () {
 
   return container;
 };
+
+function styles () {
+  return `
+.enter-word {
+  display: flex;
+  align-items: center;
+}
+
+.enter-word .meaning {
+  font-family: sans-serif;
+  color: #fff;
+}
+
+.enter-word input {
+  background-color: #38383d;
+  border: 1px solid #5f5f63;
+  color: #fff;
+  padding: 8px;
+  border-radius: 3px;
+  margin: 0 8px;
+}
+
+.enter-word button {
+  all: unset;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  border-radius: 2px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.enter-word input:focus,
+.enter-word button:focus {
+  border: 1px solid #0a84ff;
+  box-shadow: 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
+}
+
+`;
+}
 
 export default EnterWord;
