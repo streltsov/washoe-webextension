@@ -4,7 +4,6 @@ const onError = input => {
   input.classList.add("error");
 
   const clearError = event => {
-    console.log("Hello!");
     input.classList.remove("error");
     input.removeEventListener("input", clearError);
   };
@@ -47,6 +46,7 @@ function EnterWord (resolve) {
         console.log("Not an Enter");
       }
     });
+    setTimeout(() => input.focus(), 0);
     container.appendChild(input);
 
     // Button
