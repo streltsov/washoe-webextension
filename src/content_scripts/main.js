@@ -24,7 +24,7 @@ browser.runtime.onMessage.addListener(request => {
       document.body.appendChild(
         createShadowDom("SHADOW")(
           Notification (
-            EnterWord ({ word, resolve })
+            EnterWord ( resolve ) ( word )
           )
         )
       );

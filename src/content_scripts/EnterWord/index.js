@@ -1,3 +1,5 @@
+import { INTERVALS } from "../../constants";
+
 function EnterWord (resolve) {
   return function (word) {
     const container = document.createElement("div");
@@ -10,11 +12,30 @@ function EnterWord (resolve) {
 
     // Meaning
     const span = document.createElement("span");
+    span.textContent = word.meaning;
     span.className = "meaning";
     container.appendChild(span);
 
     // Input
+    let attemptsNumber = 0;
     const input = document.createElement("input");
+    input.addEventListener("keydown", event => {
+      if ( event.keyCode == 13) {
+        if ( event.target.value == word.word ) {
+          resolve({ type: "stageup", ...word, notifyIn: INTERVALS[ word.stage + 1 ] });
+          console.log("Stage Up");
+        } else if (attemptsNumber == 2) {
+          resolve({ type: "reset", ...word, notifyIn: INTERVALS[0] });
+          console.log("Reset Stage");
+        } else {
+          attemptsNumber = attemptsNumber + 1;
+          input.value == "";
+          console.log("Increase attemptsNumber");
+        }
+      } else {
+        console.log("Not an Enter");
+      }
+    });
     container.appendChild(input);
 
     // Button
