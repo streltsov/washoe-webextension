@@ -1,5 +1,16 @@
 import { INTERVALS } from "../../constants";
 
+const onError = input => {
+  input.classList.add("error");
+
+  const clearError = event => {
+    console.log("Hello!");
+    input.classList.remove("error");
+    input.removeEventListener("input", clearError);
+  };
+  input.addEventListener("input", clearError);
+};
+
 function EnterWord (resolve) {
   return function (word) {
     const container = document.createElement("div");
@@ -29,7 +40,7 @@ function EnterWord (resolve) {
           console.log("Reset Stage");
         } else {
           attemptsNumber = attemptsNumber + 1;
-          input.value == "";
+          onError(input);
           console.log("Increase attemptsNumber");
         }
       } else {
@@ -83,6 +94,11 @@ function styles () {
 .enter-word button:focus {
   border: 1px solid #0a84ff;
   box-shadow: 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
+}
+
+.enter-word input.error {
+  border: 1px solid #d70022;
+  box-shadow: 0 0 0 1px #d70022, 0 0 0 4px rgba(251, 0, 34, 0.3);
 }
 
 `;
