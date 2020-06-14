@@ -13,7 +13,7 @@
   align-items: center;
 }
 
-.washoe-notification .meaning {
+.enter-word .meaning {
   font-family: sans-serif;
   color: #fff;
 }
@@ -38,13 +38,13 @@
   box-sizing: border-box;
 }
 
-.washoe-notification input:focus,
-.washoe-notification button:focus {
+.enter-word input:focus,
+.enter-word button:focus {
   border: 1px solid #0a84ff;
   box-shadow: 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
 }
 
-.washoe-notification button {
+.enter-word button {
   background: none;
   border: none;
 }
