@@ -1,4 +1,9 @@
-import { INTERVALS, NOTIFICATION_CLASS_NAME } from "../../constants";
+import { INTERVALS, NOTIFICATION_CLASS_NAME, NOTIFICATION_HIDE_TIME } from "../../constants";
+
+const hideAndDestroy = notification => {
+  notification.classList.add("hide");
+  setTimeout(() => notification.remove(), NOTIFICATION_HIDE_TIME * 1000);
+};
 
 const onError = input => {
   input.classList.add("error");
@@ -33,9 +38,11 @@ function EnterWord (resolve) {
       if ( event.keyCode == 13) {
         if ( event.target.value == word.word ) {
           resolve({ type: "stageup", ...word, notifyIn: INTERVALS[ word.stage + 1 ] });
+          hideAndDestroy(Notification);
           console.log("Stage Up");
         } else if (attemptsNumber == 2) {
           resolve({ type: "reset", ...word, notifyIn: INTERVALS[0] });
+          hideAndDestroy(Notification);
           console.log("Reset Stage");
         } else {
           attemptsNumber = attemptsNumber + 1;
@@ -110,7 +117,17 @@ function styles () {
   box-shadow: 0 0 0 1px #d70022, 0 0 0 4px rgba(251, 0, 34, 0.3);
 }
 
-`;
+.${NOTIFICATION_CLASS_NAME}.hide {
+  animation-name: hide;
+  animation-duration: ${NOTIFICATION_HIDE_TIME}s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes hide {
+  0% { bottom: 8px; }
+  25% { bottom: 24px; }
+  100% { bottom: -72px; }
+}`;
 }
 
 export default EnterWord;
