@@ -42,6 +42,7 @@ function EnterWord (resolve) {
         } else if (attemptsNumber == 2) {
           resolve({ type: "reset", ...word, notifyIn: INTERVALS[0] });
           hideAndDestroy(Notification);
+          console.info(JSON.stringify(word, 0, 2));
         } else {
           attemptsNumber = attemptsNumber + 1;
           onError(input);
