@@ -1,4 +1,3 @@
-import Notification from "./Notification";
 import EnterWord from "./EnterWord";
 import { isElementOnPage } from "../utils/dom";
 import { NOTIFICATION_CLASS_NAME, INTERVALS } from "../constants";
@@ -22,10 +21,8 @@ browser.runtime.onMessage.addListener(request => {
       const word = JSON.parse(request);
 
       document.body.appendChild(
-        createShadowDom("SHADOW")(
-          Notification (
-            EnterWord ( resolve ) ( word )
-          )
+        createShadowDom("SHADOW") (
+          EnterWord ( resolve ) ( word )
         )
       );
 
