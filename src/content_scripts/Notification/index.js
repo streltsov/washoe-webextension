@@ -16,7 +16,7 @@ function Notification (children) {
 function styles() {
   return `
     .washoe-notification {
-      position: absolute;
+      position: fixed;
       bottom: 8px;
       right: 8px;
     
