@@ -39,18 +39,13 @@ function EnterWord (resolve) {
         if ( event.target.value == word.word ) {
           resolve({ type: "stageup", ...word, notifyIn: INTERVALS[ word.stage + 1 ] });
           hideAndDestroy(Notification);
-          console.log("Stage Up");
         } else if (attemptsNumber == 2) {
           resolve({ type: "reset", ...word, notifyIn: INTERVALS[0] });
           hideAndDestroy(Notification);
-          console.log("Reset Stage");
         } else {
           attemptsNumber = attemptsNumber + 1;
           onError(input);
-          console.log("Increase attemptsNumber");
         }
-      } else {
-        console.log("Not an Enter");
       }
     });
     setTimeout(() => input.focus(), 0);
