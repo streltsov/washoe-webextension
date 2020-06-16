@@ -35,6 +35,7 @@ function EnterWord (resolve) {
     let attemptsNumber = 0;
     const input = document.createElement("input");
     input.addEventListener("keydown", event => {
+      event.stopPropagation();
       if ( event.keyCode == 13) {
         if ( event.target.value == word.word ) {
           resolve({ type: "stageup", ...word, notifyIn: INTERVALS[ word.stage + 1 ] });
