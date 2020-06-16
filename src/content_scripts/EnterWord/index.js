@@ -71,6 +71,7 @@ function styles () {
   background-color: #2a2a2e;
   padding: 8px 12px;
   border-radius: 4px;
+  z-index: 2147483647
 }
 .${NOTIFICATION_CLASS_NAME} {
   display: flex;
