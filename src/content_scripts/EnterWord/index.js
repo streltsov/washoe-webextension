@@ -37,7 +37,7 @@ function EnterWord (resolve) {
     input.addEventListener("keydown", event => {
       event.stopPropagation();
       if ( event.keyCode == 13) {
-        if ( event.target.value == word.word ) {
+        if ( event.target.value.toLowerCase().trim() == word.word.toLowerCase().trim() ) {
           resolve({ type: "stageup", ...word, notifyIn: INTERVALS[ word.stage + 1 ] });
           hideAndDestroy(Notification);
         } else if (attemptsNumber == 2) {
