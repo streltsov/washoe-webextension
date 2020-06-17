@@ -2,10 +2,10 @@ import { NOTIFICATION_SHADOW_DOM_ID } from "../constants";
 
 // IO => Boolean
 export const isNotificationOnPage = () =>
-  Boolean(document.querySelector(NOTIFICATION_SHADOW_DOM_ID));
+  Boolean(document.getElementById(NOTIFICATION_SHADOW_DOM_ID));
 
 export const removeNotification = () =>
-  document.querySelector(NOTIFICATION_SHADOW_DOM_ID).remove();
+  document.getElementById(NOTIFICATION_SHADOW_DOM_ID).remove();
 
 // String -> Node -> Node
 export const createShadowDom = shadowHostId => children => {
