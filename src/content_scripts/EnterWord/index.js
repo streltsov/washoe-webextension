@@ -1,8 +1,9 @@
 import { INTERVALS, NOTIFICATION_CLASS_NAME, NOTIFICATION_HIDE_TIME } from "../../constants";
+import { removeNotification } from "../../utils/dom";
 
 const hideAndDestroy = notification => {
   notification.classList.add("hide");
-  setTimeout(() => notification.remove(), NOTIFICATION_HIDE_TIME * 1000);
+  setTimeout(removeNotification, NOTIFICATION_HIDE_TIME * 1000);
 };
 
 const onError = input => {
