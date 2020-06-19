@@ -35,7 +35,10 @@ function EnterWord (resolve) {
     // Input
     let attemptsNumber = 0;
     const input = document.createElement("input");
-    input.addEventListener("keydown", event => {
+
+    input.addEventListener("keydown", event => event.stopPropagation());
+    input.addEventListener("keyup", event => event.stopPropagation());
+    input.addEventListener("keypress", event => {
       event.stopPropagation();
       if ( event.keyCode == 13) {
         if ( event.target.value.toLowerCase().trim() == word.word.toLowerCase().trim() ) {
