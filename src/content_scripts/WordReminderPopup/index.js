@@ -56,6 +56,7 @@ function styles () {
   font-family: sans-serif;
   display: flex;
   flex-direction: column;
+  z-index: 2147483647
 }
 
 .cross {
