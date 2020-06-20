@@ -1,10 +1,10 @@
 import { INTERVALS, NOTIFICATION_CLASS_NAME, WORD_REMINDER_SHADOW_DOM_ID, NOTIFICATION_HIDE_TIME } from "../../constants";
+import { removeNotification, createShadowDom } from "../../utils/dom";
 import WordReminderPopup from "../WordReminderPopup";
-import { createShadowDom } from "../../utils/dom";
 
 const hideAndDestroy = notification => {
   notification.classList.add("hide");
-  setTimeout(() => notification.remove(), NOTIFICATION_HIDE_TIME * 1000);
+  setTimeout(removeNotification, NOTIFICATION_HIDE_TIME * 1000);
 };
 
 const onError = input => {
@@ -37,7 +37,9 @@ function EnterWord (resolve) {
     let attemptsNumber = 0;
     const input = document.createElement("input");
 
-    input.addEventListener("keydown", event => {
+    input.addEventListener("keydown", event => event.stopPropagation());
+    input.addEventListener("keyup", event => event.stopPropagation());
+    input.addEventListener("keypress", event => {
       event.stopPropagation();
       if ( event.keyCode == 13) {
         if ( event.target.value.toLowerCase().trim() == word.word.toLowerCase().trim() ) {
