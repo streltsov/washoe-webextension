@@ -1,4 +1,4 @@
-import { NOTIFICATION_SHADOW_DOM_ID } from "../constants";
+import { NOTIFICATION_SHADOW_DOM_ID, WORD_REMINDER_SHADOW_DOM_ID } from "../constants";
 
 // IO => Boolean
 export const isNotificationOnPage = () =>
@@ -6,6 +6,9 @@ export const isNotificationOnPage = () =>
 
 export const removeNotification = () =>
   document.getElementById(NOTIFICATION_SHADOW_DOM_ID).remove();
+
+export const removeWordReminder = () =>
+  document.getElementById(WORD_REMINDER_SHADOW_DOM_ID).remove();
 
 // String -> Node -> Node
 export const createShadowDom = shadowHostId => children => {
