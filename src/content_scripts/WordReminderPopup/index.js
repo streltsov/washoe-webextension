@@ -93,7 +93,7 @@ function styles () {
 
 .word-reminder-popup {
   animation-name: emerge;
-  animation-duration: 2.4s;
+  animation-duration: 1.4s;
   animation-fill-mode: forwards;
 }
 
