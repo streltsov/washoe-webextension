@@ -87,6 +87,7 @@ function styles () {
   bottom: 8px;
   right: 8px;
 
+  border: 1px solid rgba(249, 249, 250, 0.2);
   background-color: #2a2a2e;
   padding: 8px 12px;
   border-radius: 4px;
