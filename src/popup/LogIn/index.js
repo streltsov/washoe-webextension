@@ -16,7 +16,7 @@ function Login () {
   };
 
   return (
-    <Pane padding={8} display="flex" flexDirection="column" backgroundColor="greenTint" border width={320}>
+    <Pane padding={8} display="flex" flexDirection="column" backgroundColor="greenTint" width={320}>
 
       <Pane margin={8}>
         <Heading size={600}>Login</Heading>
