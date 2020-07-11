@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import io from "socket.io-client";
-import { useForm } from "react-hook-form";
+import { compose, props } from "sanctuary";
+import { Pane, Heading, TextInput, Button } from "evergreen-ui";
 
 function Login () {
-  const { register, handleSubmit, watch, errors } = useForm();
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("");
+
+  const getValue = props([ "target", "value" ]);
 
   const onSubmit = data => {
     const socket = io(process.env.HOST);
@@ -12,13 +16,38 @@ function Login () {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="email">Email:</label><br />
-      <input required type="email" id="email" name="email" ref={register} /><br />
-      <label htmlFor="password">Password:</label><br />
-      <input required type="password" id="password" name="password" ref={register} /><br /><br />
-      <button>Login!</button>
-    </form>
+    <Pane padding={8} display="flex" flexDirection="column" backgroundColor="greenTint" border width={320}>
+
+      <Pane margin={8}>
+        <Heading size={600}>Login</Heading>
+      </Pane>
+
+      <Pane margin={8}>
+        <TextInput
+          required
+          width="100%"
+          value={email}
+          placeholder="Email"
+          onChange={compose (setEmail) (getValue)} />
+      </Pane>
+
+      <Pane margin={8}>
+        <TextInput
+          required
+          width="100%"
+          type="password"
+          value={password}
+          placeholder="Password"
+          onChange={compose (setPassword) (getValue)} />
+      </Pane>
+
+      <Pane margin={8} display="flex" flexDirection="row-reverse" >
+        <Button onClick={() => onSubmit({ email, password })}>
+          Login
+        </Button>
+      </Pane>
+
+    </Pane>
   );
 };
 
