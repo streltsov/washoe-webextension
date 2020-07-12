@@ -3,6 +3,15 @@ const io = require("socket.io-client");
 import { createStore, combineReducers } from "redux";
 import { wrapStore } from "webext-redux";
 
+const onAddWord = data =>
+  socket.emit("add word", JSON.stringify({ ...data, notifyIn: 12e4 }));
+
+const actions = {
+  "add word": onAddWord
+};
+
+browser.runtime.onMessage.addListener(({ action, data }) => actions[action](data));
+
 const isLoggedIn = (state = false, action) =>
   action.type == "IS_LOGGED_IN" ? action.payload : state;
 
@@ -44,12 +53,6 @@ socket.on("word", word => {
 browser.storage.onChanged.addListener( changedProps => {
   console.log("Token changed");
   if (changedProps.hasOwnProperty("token")) socket.close().connect();
-});
-
-// Add Word
-browser.runtime.onMessage.addListener(res => {
-  console.log("Word to add: ", { ...res.word, notifyIn: 12e4 });
-  socket.emit("add word", JSON.stringify({ ...res.word, notifyIn: 12e4 }));
 });
 
 const sendMsgToTab = tabId => msg => browser.tabs.sendMessage( tabId, msg);

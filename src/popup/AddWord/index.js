@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 function AddWord () {
   const { register, handleSubmit } = useForm();
-  const onSubmit = data => browser.runtime.sendMessage({ word: data });
+  const onSubmit = data => browser.runtime.sendMessage({ action: "add word", data });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
