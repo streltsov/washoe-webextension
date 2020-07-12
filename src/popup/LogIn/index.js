@@ -9,11 +9,7 @@ function Login () {
 
   const getValue = props([ "target", "value" ]);
 
-  const onSubmit = data => {
-    const socket = io(process.env.HOST);
-    socket.on("connect", () => socket.emit("login", JSON.stringify(data)));
-    socket.on("token", token => browser.storage.local.set({ token }));
-  };
+  const onSubmit = data => browser.runtime.sendMessage({ action: "login", data });
 
   return (
     <Pane padding={8} display="flex" flexDirection="column" width={320}>

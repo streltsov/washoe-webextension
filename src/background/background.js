@@ -3,10 +3,17 @@ const io = require("socket.io-client");
 import { createStore, combineReducers } from "redux";
 import { wrapStore } from "webext-redux";
 
+const onLogin = data => {
+  const socket = io(process.env.HOST);
+  socket.on("connect", () => socket.emit("login", JSON.stringify(data)));
+  socket.on("token", token => browser.storage.local.set({ token }));
+};
+
 const onAddWord = data =>
   socket.emit("add word", JSON.stringify({ ...data, notifyIn: 12e4 }));
 
 const actions = {
+  login: onLogin,
   "add word": onAddWord
 };
 
