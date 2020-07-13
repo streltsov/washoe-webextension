@@ -12,9 +12,8 @@ function Login () {
   const onSubmit = data => browser.runtime.sendMessage({ action: "login", data });
 
   return (
-    <Pane padding={8} display="flex" flexDirection="column" width={320}>
-
-      <Pane margin={8}>
+    <>
+      <Pane margin={8} marginTop={16}>
         <Heading size={600}>Login</Heading>
       </Pane>
 
@@ -43,8 +42,7 @@ function Login () {
           Login
         </Button>
       </Pane>
-
-    </Pane>
+    </>
   );
 };
 
