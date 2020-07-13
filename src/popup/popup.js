@@ -13,6 +13,9 @@ const { sendMessage } = browser.runtime;
 
 const PopupMenu = () => (
   <Menu>
+    <Group>
+      <Item onClick={() => sendMessage({ action: "show add word modal" })} icon="plus">Add word</Item>
+    </Group>
     <Divider />
     <Group>
       <Item onClick={() => sendMessage({ action: "logout" })} icon="log-out">Log out</Item>
