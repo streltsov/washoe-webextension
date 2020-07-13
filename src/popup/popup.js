@@ -24,7 +24,7 @@ function Popup () {
   const { isLoggedIn } = useSelector(x => x);
 
   return (
-    <Pane padding={8} display="flex" flexDirection="column" width={320}>
+    <Pane display="flex" flexDirection="column" width={320}>
       { Boolean(isLoggedIn) ? <PopupMenu /> : <LogIn /> }
     </Pane>
   );
