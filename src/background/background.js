@@ -2,6 +2,7 @@ const io = require("socket.io-client");
 
 import { createStore, combineReducers } from "redux";
 import { wrapStore } from "webext-redux";
+import { sendMessageToActiveTab } from "../utils/webExtension";
 
 const storage = browser.storage.local;
 
@@ -19,8 +20,12 @@ const onLogOut = () => {
   browser.storage.local.remove("token").then(console.log);
 };
 
+const onShowAddWordModal = data =>
+  sendMessageToActiveTab({ msg: { action: "show add word modal" } });
+
 const actions = {
   login: onLogin,
+  "show add word modal": onShowAddWordModal,
   "add word": onAddWord,
   logout: onLogOut
 };
