@@ -1,45 +1,36 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Provider, useSelector } from "react-redux";
+import { Pane, Menu } from "evergreen-ui";
 import { Store } from "webext-redux";
 
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
 import AddWord from "./AddWord";
 
-import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+const { Group, Item, Divider } = Menu;
+const { sendMessage } = browser.runtime;
 
-import AddIcon from "@material-ui/icons/Add";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+const PopupMenu = () => (
+  <Menu>
+    <Divider />
+    <Group>
+      <Item onClick={() => sendMessage({ action: "logout" })} icon="log-out">Log out</Item>
+    </Group>
+  </Menu>
+);
 
 function Popup () {
   const { isLoggedIn } = useSelector(x => x);
-  const [ view, setView ] = useState("menu");
 
-  const Menu = () => (
-    <React.Fragment>
-      <MenuItem onClick={() => setView("add-word")}><AddIcon />Add word</MenuItem>
-      <MenuItem>Logout</MenuItem>
-    </React.Fragment>
+  return (
+    <Pane padding={8} display="flex" flexDirection="column" width={320}>
+      { Boolean(isLoggedIn) ? <PopupMenu /> : <LogIn /> }
+    </Pane>
   );
-
-  const switcher = {
-    menu: <Menu />,
-    "add-word": <AddWord />
-  };
-
-  return isLoggedIn ? (
-    <div>
-      { Boolean(view != "menu") && <MenuItem onClick={() => setView("menu")}><ArrowBackIosIcon />Back</MenuItem> }
-      { switcher[view] }
-    </div>
-  ) : <LogIn />;
 };
 
 const store = new Store();
-
 store.ready().then(() => {
   ReactDOM.render(
     <Provider store={store}>
@@ -47,3 +38,5 @@ store.ready().then(() => {
     </Provider>
     , document.getElementById("root"));
 });
+
+export default Popup;
