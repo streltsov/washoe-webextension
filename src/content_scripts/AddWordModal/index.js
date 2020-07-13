@@ -8,8 +8,8 @@ function AddWord () {
   const [ example, setExample ] = useState("");
 
   const getValue = props([ "target", "value" ]);
-  const onSubmit = data =>
-    browser.runtime.sendMessage({ action: "add word", data });
+  const onSubmit = () =>
+    browser.runtime.sendMessage({ action: "add word", data: { word, meaning, example } });
 
   return (
     <SideSheet
@@ -50,7 +50,7 @@ function AddWord () {
 
 
       <Pane margin={8} display="flex" flexDirection="row-reverse" >
-        <Button onClick={() => onSubmit({ word, meaning, example })}>
+        <Button onClick={onSubmit}>
           Done
         </Button>
       </Pane>
