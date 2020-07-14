@@ -11,6 +11,7 @@ module.exports = env => {
 
     entry: {
       background: './src/background/background.js',
+      authentication: './src/background/authentication.js',
       content_scripts: './src/content_scripts/main.js',
       popup: './src/popup/popup.js',
     },

@@ -17,7 +17,8 @@
 
   "background": {
     "scripts": [
-      "background.js"
+      "background.js",
+      "authentication.js"
     ]
   },
 
