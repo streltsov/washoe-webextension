@@ -61,11 +61,14 @@ socket.on("unauthorized", msg => {
 });
 
 // TOKEN CHANGE
-browser.storage.onChanged.addListener( ({ token: { oldValue, newValue } }) =>
-  newValue
-    ? socket.close().connect()
-    : store.dispatch({ type: "IS_LOGGED_IN", payload: false })
-);
+browser.storage.onChanged.addListener( ({ token: { newValue } }) => {
+  if (newValue) {
+    socket.close().connect();
+  } else {
+    store.dispatch({ type: "IS_LOGGED_IN", payload: false });
+    socket.close();
+  }
+});
 
 // ON WORD
 socket.on("word", word => {
