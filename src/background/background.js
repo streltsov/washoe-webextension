@@ -1,7 +1,6 @@
 const io = require("socket.io-client");
+import { store } from "./store";
 
-import { createStore, combineReducers } from "redux";
-import { wrapStore } from "webext-redux";
 import { sendMessageToActiveTab } from "../utils/webExtension";
 
 const storage = browser.storage.local;
@@ -31,12 +30,6 @@ const actions = {
 };
 
 browser.runtime.onMessage.addListener(({ action, data }) => actions[action](data));
-
-const isLoggedIn = (state = false, action) =>
-  action.type == "IS_LOGGED_IN" ? action.payload : state;
-const rootReducer = combineReducers({ isLoggedIn });
-const store = createStore(rootReducer);
-wrapStore(store);
 
 const socket = io(process.env.HOST);
 
