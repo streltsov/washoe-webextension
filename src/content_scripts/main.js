@@ -15,24 +15,14 @@ const onShowWordModal = () => {
   ReactDOM.render(<AddWord />, document.querySelector("#washoe-portal"));
 };
 
-
-const actions = {
-  "show add word modal": onShowWordModal
+const onNotification = data => {
+  console.log("onNotification: ", data);
 };
 
-browser.runtime.onMessage.addListener(({ msg: { action } }) => actions[action]());
 
-browser.runtime.onMessage.addListener(request => {
-  if (!isNotificationOnPage()) {
-    return new Promise( resolve => {
-      const word = JSON.parse(request);
+const actions = {
+  "show add word modal": onShowWordModal,
+  notification: onNotification
+};
 
-      document.body.appendChild (
-        createShadowDom (NOTIFICATION_SHADOW_DOM_ID) (
-          EnterWord (resolve) (word)
-        )
-      );
-
-    });
-  }
-});
+browser.runtime.onMessage.addListener(({ msg: { action, data } }) => actions[action](data));
