@@ -25,17 +25,3 @@ const actions = {
 };
 
 browser.runtime.onMessage.addListener(({ action, data }) => actions[action](data));
-
-const socket = io(process.env.HOST);
-
-// ON WORD
-socket.on("word", word => {
-  const onRespond = res => {
-    res && socket.emit("notification-response", JSON.stringify(res));
-  };
-  getActiveTab()
-    .then(res => res.length && sendMsgToTab(res[0].id)(word).then(onRespond));
-});
-
-const sendMsgToTab = tabId => msg => browser.tabs.sendMessage( tabId, msg);
-const getActiveTab = () => browser.tabs.query({ currentWindow: true, active: true });
