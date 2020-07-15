@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { compose, props } from "sanctuary";
 import { SideSheet, Pane, Card, Heading, TextInput, Textarea, Button, Paragraph } from "evergreen-ui";
 
-function AddWord () {
+function AddWord ({ isShown, onCloseComplete }) {
   const [ word, setWord ] = useState("");
   const [ meaning, setMeaning ] = useState("");
   const [ example, setExample ] = useState("");
@@ -13,8 +13,8 @@ function AddWord () {
 
   return (
     <SideSheet
-      isShown={true}
-      onCloseComplete={() => document.querySelector("#washoe-portal").remove()}
+      isShown={isShown}
+      onCloseComplete={onCloseComplete}
       containerProps={{ display: "flex", flexDirection: "column" }}>
 
       <Pane padding={16} borderBottom="muted">
