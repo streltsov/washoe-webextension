@@ -17,10 +17,13 @@ const onLogOut = () => browser.storage.local.remove("token");
 const onShowAddWordModal = data =>
   sendMessageToActiveTab({ msg: { action: "show add word modal" } });
 
+const onStageUp = data => console.log(data);
+
 const actions = {
   login: onLogin,
   "show add word modal": onShowAddWordModal,
   "add word": onAddWord,
+  "stage up": onStageUp,
   logout: onLogOut
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import { equals, prop, props } from "sanctuary";
 import { Pane, Text, TextInput } from "evergreen-ui";
 
-const EnterWord = ({ word: { word, meaning, word_id }, close }) => {
+const EnterWord = ({ word: { word, meaning, word_id: wordId }, close }) => {
 
   const stageUp = data =>
     browser.runtime.sendMessage({ action: "stage up", data });
@@ -10,7 +10,7 @@ const EnterWord = ({ word: { word, meaning, word_id }, close }) => {
   const handleSubmit = event => {
     if (equals(13) (prop("keyCode") (event))) {
       if (equals(word) (props([ "target", "value" ])(event))) {
-        stageUp(word_id);
+        stageUp({ wordId });
         close();
       }
     };
