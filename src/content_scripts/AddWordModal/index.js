@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { compose, props } from "sanctuary";
 import { SideSheet, Pane, Card, Heading, TextInput, Textarea, Button, Paragraph } from "evergreen-ui";
-import "/style.css";
+import "./style.css";
 
 function AddWord ({ isShown, onCloseComplete }) {
   const [ word, setWord ] = useState("");
