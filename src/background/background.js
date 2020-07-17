@@ -17,7 +17,14 @@ const onLogOut = () => browser.storage.local.remove("token");
 const onShowAddWordModal = data =>
   sendMessageToActiveTab({ msg: { action: "show add word modal" } });
 
-const onStageUp = data => console.log(data);
+const onStageUp = ({ wordId, stage, notifyIn }) => {
+  const socket = io(process.env.HOST);
+  socket
+    .on("connect", () => browser.storage.local.get("token")
+      .then(({ token }) => socket.emit("authenticate", { token }))
+      .then(() => socket.emit("stageup", JSON.stringify({ wordId, stage, notifyIn })))
+    );
+};
 
 const actions = {
   login: onLogin,
