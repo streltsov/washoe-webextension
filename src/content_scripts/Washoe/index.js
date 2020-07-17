@@ -16,7 +16,7 @@ function Washoe () {
 
   return (
     <>
-      { Object.keys(word).length ? <EnterWord word={word}/> : null }
+      { Object.keys(word).length ? <EnterWord close={() => setWord({})} word={word}/> : null }
       <AddWord isShown={isDrawerOpen} onCloseComplete={() => setIsDrawerOpen(false)} />
     </>
   );
