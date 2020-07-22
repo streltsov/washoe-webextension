@@ -20,6 +20,7 @@
     "react-hook-form": "^5.7.2",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
+    "rxjs": "^6.6.0",
     "sanctuary": "^3.0.0",
     "socket.io": "^2.3.0",
     "webext-redux": "^2.1.6"
