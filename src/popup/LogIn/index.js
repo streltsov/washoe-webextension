@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import io from "socket.io-client";
 import { compose, props } from "sanctuary";
 import { Pane, Heading, TextInput, Button } from "evergreen-ui";
 
