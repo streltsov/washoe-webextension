@@ -1,37 +1,13 @@
-import { sendMessageToActiveTab } from "../utils/webExtension";
-const io = require("socket.io-client");
 import { store } from "./store";
-const storage = browser.storage.local;
-
-const onLogin = data => {
-  const socket = io(process.env.HOST);
-  socket.on("connect", () => socket.emit("login", JSON.stringify(data)));
-  socket.on("token", token => browser.storage.local.set({ token }));
-};
-
-const onAddWord = data =>
-  socket.emit("add word", JSON.stringify({ ...data, notifyIn: 12e4 }));
-
-const onLogOut = () => browser.storage.local.remove("token");
-
-const onShowAddWordModal = data =>
-  sendMessageToActiveTab({ msg: { action: "show add word modal" } });
-
-const onStageUp = ({ wordId, stage, notifyIn }) => {
-  const socket = io(process.env.HOST);
-  socket
-    .on("connect", () => browser.storage.local.get("token")
-      .then(({ token }) => socket.emit("authenticate", { token }))
-      .then(() => socket.emit("stageup", JSON.stringify({ wordId, stage, notifyIn })))
-    );
-};
+import { post } from "./api";
 
 const actions = {
-  login: onLogin,
-  "show add word modal": onShowAddWordModal,
-  "add word": onAddWord,
-  "stage up": onStageUp,
-  logout: onLogOut
+  login: post("/login")
 };
 
-browser.runtime.onMessage.addListener(({ action, data }) => actions[action](data));
+browser.runtime.onMessage.addListener(({ action, data }, _, sendResponse) => {
+  actions[action](data).then(sendResponse);
+  return true;
+});
+
+browser.storage.onChanged.addListener(({ token: { newValue } }) => console.log("Helluva: ", newValue));

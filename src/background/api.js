@@ -5,4 +5,7 @@ const instance = axios.create({
   headers: { "Content-Type": "application/json" }
 });
 
-export const post = url => data => instance.post(url, data);
+export const post = url => data =>
+  instance.post(url, data)
+    .then(({ data }) => data)
+    .catch(({ response: { data } }) => data);
