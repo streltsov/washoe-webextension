@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { compose, props } from "sanctuary";
-import { Pane, Heading, TextInput, Button, Badge } from "evergreen-ui";
+import { Pane, Heading, TextInput, Button, Badge, Spinner } from "evergreen-ui";
 
 function Login () {
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
   const [ isError, setIsError ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
 
   const getValue = props([ "target", "value" ]);
 
   const onSubmit = data => {
+    setIsLoading(true);
     browser.runtime.sendMessage({ action: "login", data })
-      .then(({ error, token }) => error ? setIsError(true) : null);
+      .then(({ error, token }) => error ? setIsError(true) : null)
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -46,7 +49,7 @@ function Login () {
 
       <Pane margin={8} display="flex" flexDirection="row-reverse" >
         <Button onClick={() => onSubmit({ email, password })}>
-          Login
+          { isLoading ? <Spinner size={16} /> : "Login" }
         </Button>
       </Pane>
     </>
