@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import { compose, props } from "sanctuary";
-import { Pane, Heading, TextInput, Button } from "evergreen-ui";
+import { Pane, Heading, TextInput, Button, Badge } from "evergreen-ui";
 
 function Login () {
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
+  const [ isError, setIsError ] = useState(false);
 
   const getValue = props([ "target", "value" ]);
 
-  const onSubmit = data => browser.runtime.sendMessage({ action: "login", data });
+  const onSubmit = data => {
+    browser.runtime.sendMessage({ action: "login", data })
+      .then(({ error, token }) => error ? setIsError(true) : null);
+  };
 
   return (
     <>
       <Pane margin={8} marginTop={16}>
         <Heading size={600}>Login</Heading>
       </Pane>
+
+      { isError ? <Badge color="red">Wrong credentials, try again</Badge> : null }
 
       <Pane margin={8}>
         <TextInput
@@ -23,6 +29,7 @@ function Login () {
           type="email"
           value={email}
           placeholder="Email"
+          onFocus={() => setIsError(false)}
           onChange={compose (setEmail) (getValue)} />
       </Pane>
 
@@ -33,6 +40,7 @@ function Login () {
           type="password"
           value={password}
           placeholder="Password"
+          onFocus={() => setIsError(false)}
           onChange={compose (setPassword) (getValue)} />
       </Pane>
 
