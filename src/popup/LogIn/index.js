@@ -31,6 +31,7 @@ function Login () {
           width="100%"
           type="email"
           value={email}
+          isInvalid={isError}
           placeholder="Email"
           onFocus={() => setIsError(false)}
           onChange={compose (setEmail) (getValue)} />
@@ -42,6 +43,7 @@ function Login () {
           width="100%"
           type="password"
           value={password}
+          isInvalid={isError}
           placeholder="Password"
           onFocus={() => setIsError(false)}
           onChange={compose (setPassword) (getValue)} />
