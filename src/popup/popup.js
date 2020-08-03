@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Provider, useSelector } from "react-redux";
 import { Pane, Menu } from "evergreen-ui";
-import { Store } from "webext-redux";
 
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
@@ -18,14 +17,19 @@ const PopupMenu = () => (
     </Group>
     <Divider />
     <Group>
-      <Item onClick={() => sendMessage({ action: "logout" })} icon="log-out">Log out</Item>
+      <Item onClick={() => browser.storage.local.remove("token") } icon="log-out">Log out</Item>
     </Group>
   </Menu>
 );
 
 function Popup () {
-  const { isLoggedIn } = useSelector(x => x);
+  const [ isLoggedIn, setIsLoggedIn ] = useState(null);
+  useEffect(() => {
+    browser.storage.local.get("token").then(({ token }) => setIsLoggedIn(Boolean(token)));
+    browser.storage.onChanged.addListener(({ token: { newValue } }) => setIsLoggedIn(Boolean(newValue)));
+  }, []);
 
+  if (isLoggedIn == null) return null;
   return (
     <Pane display="flex" flexDirection="column" width={320}>
       { Boolean(isLoggedIn) ? <PopupMenu /> : <LogIn /> }
@@ -33,13 +37,4 @@ function Popup () {
   );
 };
 
-const store = new Store();
-store.ready().then(() => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <Popup />
-    </Provider>
-    , document.getElementById("root"));
-});
-
-export default Popup;
+ReactDOM.render(<Popup />, document.getElementById("root"));

@@ -13,7 +13,7 @@ function Login () {
   const onSubmit = data => {
     setIsLoading(true);
     browser.runtime.sendMessage({ action: "login", data })
-      .then(({ error, token }) => error ? setIsError(true) : null)
+      .then(({ error, token }) => error ? setIsError(true) : browser.storage.local.set({ token }))
       .finally(() => setIsLoading(false));
   };
 
@@ -28,6 +28,7 @@ function Login () {
       <Pane margin={8}>
         <TextInput
           required
+          autoFocus
           width="100%"
           type="email"
           value={email}
