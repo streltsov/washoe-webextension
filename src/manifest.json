@@ -17,8 +17,7 @@
 
   "background": {
     "scripts": [
-      "background.js",
-      "notification.js"
+      "background.js"
     ]
   },
 

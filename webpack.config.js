@@ -11,7 +11,6 @@ module.exports = env => {
 
     entry: {
       background: "./src/background/background.js",
-      notification: "./src/background/notification.js",
       content_scripts: "./src/content_scripts/main.js",
       popup: "./src/popup/popup.js"
     },
