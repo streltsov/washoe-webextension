@@ -1,10 +1,12 @@
-import { post } from "./api";
+import { sendMessageToActiveTab } from "../utils/webExtension";
 
-const actions = {
-  login: post("/login")
+const showAddWordForm = _ => {
+  console.log("Helluva");
+  sendMessageToActiveTab({ action: "showAddWordForm" });
 };
 
-browser.runtime.onMessage.addListener(({ action, data }, _, sendResponse) => {
-  actions[action](data).then(sendResponse);
-  return true;
-});
+const actions = {
+  showAddWordForm
+};
+
+browser.runtime.onMessage.addListener(({ action, data }) => actions[action](data));
