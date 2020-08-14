@@ -9,8 +9,9 @@ function AddWord ({ isShown, onCloseComplete }) {
   const [ example, setExample ] = useState("");
 
   const getValue = props([ "target", "value" ]);
+
   const onSubmit = () =>
-    browser.runtime.sendMessage({ action: "add word", data: { word, meaning, example } });
+    browser.runtime.sendMessage({ action: "addWord", data: { word, meaning, example } });
 
   return (
     <SideSheet
