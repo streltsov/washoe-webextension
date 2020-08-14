@@ -10,7 +10,7 @@ const showAddWordForm = _ =>
   sendMessageToActiveTab({ action: "showAddWordForm" });
 
 const addWord = data =>
-  localforage.setItem(data.word, { ...data, stage: 0, notifyOn: Date.now() + INTERVALS[0] })
+  localforage.setItem(data.word, { id: Date.now(), ...data, stage: 0, notifyOn: Date.now() + INTERVALS[0] })
     .then(_ => sendMessageToActiveTab({ action: "closeAddWordForm" }))
     .catch(error => console.error("addWord -> localforage.setItem: ", error));
 
