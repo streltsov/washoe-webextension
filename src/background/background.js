@@ -1,13 +1,10 @@
 import { sendMessageToActiveTab } from "../utils/webExtension";
 
-const showAddWordForm = _ => {
-  console.log("Helluva");
+const showAddWordForm = _ =>
   sendMessageToActiveTab({ action: "showAddWordForm" });
-};
 
-const addWord = wordData => {
+const addWord = wordData =>
   console.log(wordData);
-};
 
 const actions = {
   showAddWordForm,
