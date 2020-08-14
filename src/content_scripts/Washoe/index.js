@@ -8,8 +8,8 @@ function Washoe () {
   const [ isDrawerOpen, setIsDrawerOpen ] = useState(false);
 
   const actions = {
-    "showAddWordForm": _ => setIsDrawerOpen(true),
-    "closeAddWordForm": _ => setIsDrawerOpen(false),
+    showAddWordForm: _ => setIsDrawerOpen(true),
+    closeAddWordForm: _ => setIsDrawerOpen(false),
     notification: word => setWord(JSON.parse(word))
   };
 
