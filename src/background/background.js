@@ -18,7 +18,9 @@ const getWordToRepeat = _ => new Promise(resolve =>
   localforage.iterate(({ notifyOn, ...rest }) => notifyOn < Date.now() ? resolve(rest) : null)
 );
 
-const subscribe = interval(5000).pipe(mergeMap(_ => from(getWordToRepeat()))).subscribe(console.log);
+const subscribe = interval(5000)
+  .pipe(mergeMap(_ => from(getWordToRepeat())))
+  .subscribe(data => sendMessageToActiveTab({ action: "notification", data }));
 
 const actions = {
   showAddWordForm,

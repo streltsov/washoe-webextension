@@ -10,7 +10,7 @@ function Washoe () {
   const actions = {
     showAddWordForm: _ => setIsDrawerOpen(true),
     closeAddWordForm: _ => setIsDrawerOpen(false),
-    notification: word => setWord(JSON.parse(word))
+    notification: setWord
   };
 
   browser.runtime.onMessage.addListener(({ action, data }) => actions[action](data));
