@@ -3,3 +3,4 @@ export const WORD_REMINDER_SHADOW_DOM_ID = "washoe-word-reminder-shadow-dom";
 export const NOTIFICATION_SHADOW_DOM_ID = "washoe-notification-shadow-dom";
 export const NOTIFICATION_CLASS_NAME = "washoe-notification";
 export const NOTIFICATION_HIDE_TIME = 0.6;
+export const CHECK_WORDS_INTERVAL = 6e4;

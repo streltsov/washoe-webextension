@@ -3,15 +3,15 @@ import { INTERVALS } from "../../constants";
 import { equals, prop, props } from "sanctuary";
 import { Pane, Text, TextInput } from "evergreen-ui";
 
-const EnterWord = ({ word: { word, meaning, stage, word_id: wordId }, close }) => {
+const EnterWord = ({ word: { id, word, meaning }, close }) => {
 
-  const stageUp = data =>
-    browser.runtime.sendMessage({ action: "stage up", data });
+  const incrementWordStage = data =>
+    browser.runtime.sendMessage({ action: "incrementWordStage", data });
 
   const handleSubmit = event => {
     if (equals(13) (prop("keyCode") (event))) {
       if (equals(word) (props([ "target", "value" ])(event))) {
-        stageUp({ wordId, stage, notifyIn: INTERVALS[ stage + 1 ] });
+        incrementWordStage({ id });
         close();
       }
     };
