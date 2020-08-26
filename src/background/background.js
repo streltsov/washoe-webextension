@@ -7,6 +7,9 @@ const incrementWordStage = ({ id }) => localforage.getItem(String(id))
   .then(({ stage, ...value }) => setItem(id, { ...value, stage: stage + 1, notifyOn: Date.now() + INTERVALS[stage + 1] }))
   .catch(console.error);
 
+const resetWordStage = ({ id }) => localforage.getItem(String(id))
+  .then(({ stage, ...value }) => setItem(id, { ...value, stage: 0, notifyOn: Date.now() + INTERVALS[0] }))
+  .catch(console.error);
 
 const showAddWordForm = _ =>
   sendMessageToActiveTab({ action: "showAddWordForm" });
