@@ -1,39 +1,42 @@
-import React from "react";
-import { INTERVALS } from "../../constants";
-import { equals, prop, props } from "sanctuary";
+import React, { useState, useEffect, useRef } from "react";
+import { filter, map, take, finalize } from "rxjs/operators";
 import { Pane, Text, TextInput } from "evergreen-ui";
+import { fromEvent } from "rxjs";
 
-const EnterWord = ({ word: { id, word, meaning }, close }) => {
+export const EnterWord = ({ word: { id, word, meaning }, onSuccess, onFail }) => {
+  const inputEl = useRef(null);
 
-  const incrementWordStage = data =>
-    browser.runtime.sendMessage({ action: "incrementWordStage", data });
-
-  const handleSubmit = event => {
-    if (equals(13) (prop("keyCode") (event))) {
-      if (equals(word) (props([ "target", "value" ])(event))) {
-        incrementWordStage({ id });
-        close();
-      }
-    };
-  };
+  useEffect(() => {
+    const keyDown$ = fromEvent(inputEl.current, "keydown");
+    const enterKeyDown$ = keyDown$.pipe(
+      filter(({ key }) => key == "Enter"),
+      map(({ target: { value } }) => value),
+      take(3),
+      finalize(onFail)
+    );
+    enterKeyDown$.subscribe(value => value == word ? onSuccess() : null);
+    return enterKeyDown$.unsubscrube;
+  }, []);
 
   return (
-    <Pane
-      elevation="3"
-      margin="12px"
-      padding="12px"
-      display="flex"
-      position="fixed"
-      bottom="12px"
-      right="12px"
-      maxWidth="650px"
-      borderRadius="2"
-      alignItems="center"
-      background="blueTint">
+    <Pane {...styles} >
       <Text marginRight="8px">{meaning}</Text>
-      <TextInput autoFocus onKeyDown={handleSubmit} />
+      <TextInput innerRef={inputEl} />
     </Pane>
   );
 };
 
-export { EnterWord };
+
+const styles = {
+  elevation: "3",
+  margin: "12px",
+  padding: "12px",
+  display: "flex",
+  position: "fixed",
+  bottom: "12px",
+  right: "12px",
+  maxWidth: "650px",
+  borderRadius: "2",
+  alignItems: "center",
+  background: "blueTint"
+};

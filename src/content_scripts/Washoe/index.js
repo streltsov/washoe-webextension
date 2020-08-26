@@ -15,9 +15,20 @@ function Washoe () {
 
   browser.runtime.onMessage.addListener(({ action, data }) => actions[action](data));
 
+  function onFail () {
+    console.log("On Fail from Washoe component!");
+  };
+
+  function onSuccess () {
+    console.log("On Success from Washoe component!");
+    console.log("Word: ", word);
+    browser.runtime.sendMessage({ action: "incrementWordStage", data: { id: word.id } });
+    setWord({});
+  };
+
   return (
     <>
-      { Object.keys(word).length ? <EnterWord close={() => setWord({})} word={word}/> : null }
+      { Object.keys(word).length ? <EnterWord onFail={onFail} onSuccess={onSuccess} word={word} /> : null }
       <AddWord isShown={isDrawerOpen} onCloseComplete={() => setIsDrawerOpen(false)} />
     </>
   );
