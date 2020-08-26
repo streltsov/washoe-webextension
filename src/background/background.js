@@ -23,6 +23,7 @@ const addWord = data => {
 
 const actions = {
   incrementWordStage,
+  resetWordStage,
   showAddWordForm,
   addWord
 };
