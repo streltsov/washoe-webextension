@@ -17,6 +17,9 @@ function Washoe () {
 
   function onFail () {
     console.log("On Fail from Washoe component!");
+    console.log("Word: ", word);
+    browser.runtime.sendMessage({ action: "resetWordStage", data: { id: word.id } });
+    setWord({});
   };
 
   function onSuccess () {
