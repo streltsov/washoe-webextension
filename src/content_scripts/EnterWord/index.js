@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { filter, map, take, finalize } from "rxjs/operators";
-import { Pane, Text, TextInput } from "evergreen-ui";
+import { Pane, Text, TextInput, Pill } from "evergreen-ui";
 import { fromEvent } from "rxjs";
 
-export const EnterWord = ({ word: { id, word, meaning }, onSuccess, onFail }) => {
+export const EnterWord = ({ word: { id, word, meaning, stage }, onSuccess, onFail }) => {
   const inputEl = useRef(null);
 
   useEffect(() => {
@@ -22,6 +22,7 @@ export const EnterWord = ({ word: { id, word, meaning }, onSuccess, onFail }) =>
     <Pane {...styles} >
       <Text marginRight="8px">{meaning}</Text>
       <TextInput innerRef={inputEl} />
+      <Pill marginLeft={8}>{stage}</Pill>
     </Pane>
   );
 };
