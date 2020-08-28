@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AddWord from "../AddWordModal";
 import { EnterWord } from "../EnterWord";
+import { ChooseButton } from "../ChooseButton";
 import "./style.css";
 
 function Washoe () {
@@ -31,8 +32,15 @@ function Washoe () {
 
   return (
     <>
-      { Object.keys(word).length ? <EnterWord onFail={onFail} onSuccess={onSuccess} word={word} /> : null }
+
+      { !Object.keys(word).length
+        ? null
+        : word.stage % 2
+          ? <EnterWord onFail={onFail} onSuccess={onSuccess} word={word} />
+          : <ChooseButton onFail={onFail} onSuccess={onSuccess} word={word} /> }
+
       <AddWord isShown={isDrawerOpen} onCloseComplete={() => setIsDrawerOpen(false)} />
+
     </>
   );
 };
