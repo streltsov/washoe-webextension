@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Pane, Text, TextInput, Pill, ErrorIcon, TickCircleIcon } from "evergreen-ui";
 import { filter, take, finalize, tap, pluck } from "rxjs/operators";
+import { Notification } from "../components/Notification";
 import { fromEvent } from "rxjs";
 
 const Input = ({ isInvalid, isSuccess, ...props }) => (
@@ -45,25 +46,12 @@ export const EnterWord = ({ word: { id, word, meaning, stage }, onSuccess, onFai
   };
 
   return (
-    <Pane {...styles} >
+    <Notification>
       <Text marginRight="8px">{meaning}</Text>
       <Input autoFocus isSuccess={isSuccess} isInvalid={isInvalid} innerRef={inputEl} />
       <Pill marginLeft={8}>{stage}</Pill>
-    </Pane>
+    </Notification>
   );
 };
 
 
-const styles = {
-  elevation: "3",
-  margin: "12px",
-  padding: "12px",
-  display: "flex",
-  position: "fixed",
-  bottom: "12px",
-  right: "12px",
-  maxWidth: "650px",
-  borderRadius: "2",
-  alignItems: "center",
-  background: "blueTint"
-};
