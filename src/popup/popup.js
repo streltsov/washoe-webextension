@@ -22,7 +22,7 @@ function Popup () {
       <Menu>
         <Group>
           <Item onClick={handleAddWord} icon="plus">Add word</Item>
-          <Item onClick={handleDictionary} icon="FontIcon">Dictionary</Item>
+          <Item onClick={handleDictionary} icon="font">Dictionary</Item>
         </Group>
       </Menu>
     </Pane>
