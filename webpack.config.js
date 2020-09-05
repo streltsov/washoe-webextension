@@ -13,7 +13,8 @@ module.exports = env => {
       background: "./src/background/background.js",
       checkWordsLoop: "./src/background/checkWordsLoop.js",
       content_scripts: "./src/content_scripts/main.js",
-      popup: "./src/popup/popup.js"
+      popup: "./src/popup/popup.js",
+      dictionary: "./src/dictionary/dictionary.js"
     },
 
     output: {
@@ -26,6 +27,7 @@ module.exports = env => {
       new CopyPlugin({
         patterns: [
           "src/popup/popup.html",
+          "src/dictionary/dictionary.html",
           "src/manifest.json"
         ]
       })
