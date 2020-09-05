@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import { ErrorFallback } from "../components/ErrorFallback";
 import { fetchAllWords } from "../utils/webExtension";
+import { ErrorBoundary } from "react-error-boundary";
 import { Table } from "./components/Table";
 
 function Dictionary () {
@@ -9,4 +11,9 @@ function Dictionary () {
   return <Table words={words} />;
 };
 
-ReactDOM.render(<Dictionary />, document.getElementById("root"));
+ReactDOM.render(
+  <ErrorBoundary FallbackComponent={ErrorFallback}>
+    <Dictionary />
+  </ErrorBoundary>,
+  document.getElementById("root")
+);
