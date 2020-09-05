@@ -31,7 +31,8 @@ Table.propTypes = {
     PropTypes.shape({
       word: PropTypes.string.isRequired,
       meaning: PropTypes.string.isRequired,
-      example: PropTypes.string
+      example: PropTypes.string,
+      stage: PropTypes.number.isRequired
     })
   )
 };
