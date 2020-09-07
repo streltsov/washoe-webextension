@@ -16,17 +16,15 @@ const handleDictionary = _ => {
   window.close();
 };
 
-function Popup () {
-  return (
-    <Pane display="flex" flexDirection="column" width={320}>
-      <Menu>
-        <Group>
-          <Item onClick={handleAddWord} icon="plus">Add word</Item>
-          <Item onClick={handleDictionary} icon="font">Dictionary</Item>
-        </Group>
-      </Menu>
-    </Pane>
-  );
-};
+const Popup = _ => (
+  <Pane display="flex" flexDirection="column" width={320}>
+    <Menu>
+      <Group>
+        <Item onClick={handleAddWord} icon="plus">Add word</Item>
+        <Item onClick={handleDictionary} icon="font">Dictionary</Item>
+      </Group>
+    </Menu>
+  </Pane>
+);
 
 ReactDOM.render(<Popup />, document.getElementById("root"));
