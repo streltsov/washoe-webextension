@@ -26,6 +26,7 @@ function AddWord ({ isShown, onCloseComplete }) {
       <Pane margin={8}>
         <TextInput
           required
+          autoFocus
           width="100%"
           type="email"
           value={word}
