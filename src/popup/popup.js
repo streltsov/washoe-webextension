@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Pane, Menu } from "evergreen-ui";
 
-const { Group, Item, Divider } = Menu;
+const { Group, Item } = Menu;
 
 const handleAddWord = _ => {
   browser.runtime.sendMessage({ action: "showAddWordForm" });
